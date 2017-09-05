@@ -1,36 +1,19 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
+var sequelize = require('./db.js');
+var User = sequelize.import('./models/user');
 
+User.sync(); // sync( {force: true}) WARNING: This will DROP the table!
 app.use(require('./middleware/header'))
 
 app.use('/api/test', function(req, res){
 	res.send("Hello World");
 });
 
-var Sequelize = require('sequelize');
-var sequelize = new Sequelize('workoutlog', 'postgres', 'postgresqlAdnilc123', {
-	host: 'localhost',
-	dialect: 'postgres'
-});
-
-sequelize.authenticate().then(
-	function() {
-		console.log('connected to workoulog postgres db');
-	},
-	function(err){
-		console.log(err);
-	}
-);
 //opens port 3000
 app.listen(3000, function(){
 	console.log("app is listening on 3000")
-});
-
-//build a user model in sqllize
-var User = sequelize.define('user', {
-	username: Sequelize.STRING,
-	passwordhash: Sequelize.STRING,
 });
 
 User.sync();
@@ -55,6 +38,3 @@ app.post('/api/user', function(req, res){
 		}
 	)
 });
-
-//This drops (deletes) all users in the table
-//User.sync({ force: true })
