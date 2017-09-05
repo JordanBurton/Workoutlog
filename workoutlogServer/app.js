@@ -56,4 +56,5 @@ app.post('/api/user', function(req, res){
 	)
 });
 
-//User.sync({ force: true})
+//This drops (deletes) all users in the table
+//User.sync({ force: true })
