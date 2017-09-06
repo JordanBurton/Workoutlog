@@ -14,7 +14,7 @@ $(function(){
 			};
 
 			//signup post
-			ver signup = $.ajax({
+			var signup = $.ajax({
 				type: "POST",
 				url: WorkoutLog.API_BASE + "user",
 				data: JSON.stringify(user),
@@ -29,18 +29,10 @@ $(function(){
 				$("#signup-modal").modal("hide");
 				$(".disabled").removeClass("disabled");
 				$("#loginout").text("Lougout");
-				}).fail(function() {
+			}).fail(function() {
 				$("#su_error").text("There was an issue with sign up").show();
 				});
-			})
-		}
-
-		//login method
-
-		//loginout method
-
+			}
+		})
+			$("#signup").on("click", WorkoutLog.signup);
 	});
-
-	//bind events
-	$("#signup").on("click", WorkoutLog.signup);
-});
