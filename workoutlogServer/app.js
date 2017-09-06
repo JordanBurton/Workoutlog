@@ -2,7 +2,11 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var sequelize = require('./db.js');
-var User = sequelize.import('./models/user');
+var User = sequelize.import(__dirname + '\\models\\user');
+
+app.use(bodyParser.json());
+
+app.use('/api/user', require('./routes/user'));
 
 User.sync(); // sync( {force: true}) WARNING: This will DROP the table!
 app.use(require('./middleware/header'))
@@ -17,24 +21,3 @@ app.listen(3000, function(){
 });
 
 User.sync();
-
-app.use(bodyParser.json());
-
-app.post('/api/user', function(req, res){
-	var username = req.body.user.username;
-	var pass = req.body.user.password;
-	User.create({
-		username: username,
-		passwordhash: ""
-	}).then(
-		function createSuccess(user){
-			res.json({
-				user: user,
-				message: 'create'
-			})
-		},
-		function createError(err){
-			res.send(500, err.message);
-		}
-	)
-});
