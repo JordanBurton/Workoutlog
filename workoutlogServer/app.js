@@ -7,6 +7,7 @@ var User = sequelize.import(__dirname + '\\models\\user');
 app.use(bodyParser.json());
 
 app.use('/api/user', require('./routes/user'));
+app.use('/api/login', require('./routes/session'));
 
 User.sync(); // sync( {force: true}) WARNING: This will DROP the table!
 app.use(require('./middleware/header'))
