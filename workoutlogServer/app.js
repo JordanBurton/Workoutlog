@@ -1,3 +1,4 @@
+require('dotenv').config();
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
@@ -11,6 +12,7 @@ app.use('/api/login', require('./routes/session'));
 
 User.sync(); // sync( {force: true}) WARNING: This will DROP the table!
 app.use(require('./middleware/header'))
+app.use(require('./middleware/validate-session'));
 
 app.use('/api/test', function(req, res){
 	res.send("Hello World");
